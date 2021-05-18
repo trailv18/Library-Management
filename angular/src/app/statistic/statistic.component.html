@@ -1,0 +1,97 @@
+<div [@routerTransition]>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6">
+            <h1>Statistic </h1>
+          </div>
+          <div class="col-6 text-right">
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+            <div class="input-group">
+              <div class="container">
+                <div class="row">
+                  <div class="col col-lg-2">
+                    <select style="width: 100px;" class="form-control" (change)="changePageSize($event.target.value)" [(ngModel)]="pageSize">
+                      <option *ngFor=" let ps of listPageSize"
+                            [value]="ps.size">
+                            {{ps.size}}
+                      </option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-sm">
+                    <select style="width: 100px;" class="form-control"  [(ngModel)]="month">
+                      <option value="">Choose month</option>
+                      <option *ngFor=" let m of listMonth"
+                            [value]="m.m">
+                            {{m.m}}
+                      </option>
+                    </select>
+                  </div>
+  
+                  <div style="float: right;" class="col-sm">
+                    <button type="button" class="btn bg-blue" (click)="filter()">
+                      <i class="fas fa-search"></i>
+                    </button>
+  
+                    <button type="button" class="btn bg-secondary mx-3" (click)="setup()">
+                      Refresh
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead class="bg-light">
+                <tr>
+                  <th>Book</th>
+                  <th>Category</th>
+                  <th>Authory</th>
+                  <th>Quantity </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor=" let st of statistics | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems:count }; let i = index">
+                  <td>{{st.bookName}}</td>
+                  <td>{{st.categoryName}}</td>
+                  <td>{{st.authorName}}</td>
+                  <td>{{st.quantity}}</td>                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-light border-top">
+            <div class="row">
+              <div class="col-sm-4 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary" (click)="refresh()">
+                  <i class="fas fa-redo-alt"></i>
+                </button>
+              </div>
+              <div class="col-sm-4 col-12 text-center">
+                <p class="mb-0 my-2">
+                  {{ "TotalRecordsCount" | localize: count }}
+                </p>
+              </div>
+              <div class="col-sm-4 col-12">
+                <div class="float-sm-right m-auto">
+                  <pagination-controls previousLabel="" nextLabel="" (pageChange)="onChangePage($event)"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

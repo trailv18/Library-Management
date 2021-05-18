@@ -1,0 +1,97 @@
+<div [@routerTransition]>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6">
+            <h1>Library Province District</h1>
+          </div>
+          <div class="col-6 text-right">
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+            <div class="input-group">
+              <div class="container">
+                <div class="row">
+                  <div class="col col-lg-2">
+                    <select class="form-control" (change)="changePageSize($event.target.value)" [(ngModel)]="pageSize">
+                      <option *ngFor=" let ps of listPageSize"
+                            [value]="ps.size">
+                            {{ps.size}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm form-group">
+                    <select class="form-control" [(ngModel)]="provinceId"> 
+                        <option [value]="defaultProvince">--Province--</option>
+                        <option *ngFor=" let province of provinces"
+                            [value]="province.id">
+                            {{province.name}}
+                        </option>
+                      </select>
+                  </div>
+                 
+                  <div class="col-sm float-right">
+                    <button type="button" class="btn bg-blue" (click)="filter()">
+                      <i class="fas fa-search"></i>
+                    </button>
+
+                    <button type="button" class="btn bg-secondary mx-3" (click)="setup()">
+                      <i class="fas fa-redo-alt"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead class="bg-light">
+                <tr>
+                  <th>District</th>
+                  <th>Quantity Library</th>
+                  <th>Quantity User</th>
+                  <th>Total Borrow</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor=" let libraryProvinceDistrict of libraryProvinceDistricts | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems:count }">
+                  <td>{{libraryProvinceDistrict.districtName}}</td>   
+                  <td>{{libraryProvinceDistrict.quantityLibrary}}</td>       
+                  <td>{{libraryProvinceDistrict.quantityUser}}</td>    
+                  <td>{{libraryProvinceDistrict.totalBorrow}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-light border-top">
+            <div class="row">
+              <div class="col-sm-4 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary" (click)="refresh()">
+                  <i class="fas fa-redo-alt"></i>
+                </button>
+              </div>
+              <div class="col-sm-4 col-12 text-center">
+                <p class="mb-0 my-2">
+                  {{ "TotalRecordsCount" | localize: count }}
+                </p>
+              </div>
+              <div class="col-sm-4 col-12">
+                <div class="float-sm-right m-auto">
+                  <pagination-controls previousLabel="" nextLabel="" (pageChange)="onChangePage($event)"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

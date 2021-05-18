@@ -1,0 +1,96 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createCategoryForm="ngForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'Create New Library' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="name">
+        {{ "Library" | localize }}
+      </label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          id="name"
+          maxlength="128"
+          required
+          [(ngModel)]="library.name"
+          #nameModel="ngModel"
+          #nameEl
+        />
+        <abp-validation-summary
+          [control]="nameModel"
+          [controlEl]="nameEl"
+        ></abp-validation-summary>
+      </div>
+    </div>
+
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="name">
+        {{ "Province" | localize }}
+      </label>
+      <div class="col-md-9">
+          <select class="form-control" 
+             (change)="selectValue($event)"
+              name="provinceId" 
+              id="selectfrorm" 
+              [id]="library.provinceId"
+              minlength=5
+              maxlength=100
+              required
+              [(ngModel)]="library.provinceId" 
+              #nameModel="ngModel" 
+              #nameEl
+            >
+            <option value="library.provinceId">--None--</option>
+            <option value="library.provinceId" 
+                *ngFor=" let province of provinces"
+                [value]="province.id">
+                {{province.name}}
+            </option>
+          </select>
+        <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+      </div>
+  </div>
+
+    <div class="form-group row required">
+        <label class="col-md-3 col-form-label" for="name">
+          {{ "District" | localize }}
+        </label>
+        <div class="col-md-9">
+            <select class="form-control" 
+                name="districtId" 
+                id="selectfrorm" 
+                [id]="library.districtId"
+                minlength=5
+                maxlength=100
+                required
+                [(ngModel)]="library.districtId" 
+                #nameModel="ngModel" 
+                #nameEl
+              >
+              <option value="library.districtId">--None--</option>
+              <option value="library.districtId" 
+                  *ngFor=" let district of districts"
+                  [value]="district.id">
+                  {{district.name}}
+              </option>
+            </select>
+          <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+        </div>
+    </div>
+    
+  </div>
+  <abp-modal-footer
+    [cancelDisabled]="saving"
+    [saveDisabled]="!createCategoryForm.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"
+  ></abp-modal-footer>
+</form>

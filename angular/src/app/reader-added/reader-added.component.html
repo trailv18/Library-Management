@@ -1,0 +1,44 @@
+<div [@routerTransition]>
+  <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead class="bg-light">
+                <tr>
+                  <th>Book</th>
+                  <th>Borrow Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor=" let b of cart; let i index">
+                  <td>{{ b.book }}</td>
+                  <td>{{ b.priceBorrow }}</td>
+                  <td>
+                    <input type="number" class="form-input input-number" name="qty{{i}}" [(ngModel)]="b.qty" #nameModel="ngModel">
+                  </td>   
+                  <td>{{b.qty * b.priceBorrow}}</td>            
+                  <td>
+                    <button class="btn"(click)="update(b.bookId,b.qty)"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn"(click)="deleteCart(b.bookId)"><i class="fas fa-trash-alt"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                    <td>{{mess}}</td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td>Total: {{total}}</td>
+                    <td><button style="float: right;" (click)="save()" class="btn btn-success">Borrow</button></td>
+                </tr>
+            </tfoot>
+            </table>
+          </div>
+  
+        </div>
+      </div>
+    </section>
+  </div>

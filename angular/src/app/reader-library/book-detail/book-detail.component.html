@@ -1,0 +1,40 @@
+<div [@routerTransition] class="container">
+    <div class="card">
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+                <div class="preview-pic tab-content">
+                      <div class="tab-pane active" id="pic-1"><img src="https://c4.wallpaperflare.com/wallpaper/560/952/973/background-texture-old-brown-wallpaper-thumb.jpg" /></div>
+                </div>  
+                </div>
+                <div class="details col-md-6">
+                    <h4 class="detail"><span>{{bookLibrary?.bookName}}</span></h4>
+                    <h4 class="detail">Borrow price: <span>{{bookLibrary?.priceBorrow}} VND.</span></h4>
+                    <h5 class="detail">Author: <span>{{bookLibrary?.author}}.</span></h5>
+                    <h5 class="detail">Publisher: <span>{{bookLibrary?.publisher}}.</span></h5>
+                    <h5 class="detail">Year public: <span>{{bookLibrary?.yearPublic}}.</span></h5>
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number"  (click)="minus()" data-field="qty[1]">
+                                <span><i class="fas fa-minus"></i></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-input input-number" name="qty[1]" id="qty" [(ngModel)]="qty" #nameModel="ngModel">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-number" (click)="plus()" data-field="qty[1]">
+                                <span><i class="fas fa-plus"></i></span>
+                            </button>
+                        </span>
+                        
+                    </div>
+                    <h5 style="padding-top: 5px; font-size: 15px;">(Have: <span>{{bookLibrary?.stock}} in stock.)</span></h5>
+
+                    <div class="action">
+                        <button class="add-to-cart btn btn-default" type="button" (click)="onClick(bookLibrary)">add to list</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

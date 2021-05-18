@@ -1,0 +1,133 @@
+<div [@routerTransition]>
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-6">
+            <h1>{{library.name}}</h1>
+          </div>
+          <div class="col-6 text-right">
+            <a class="btn bg-blue" [routerLink]="['/app/reader-list-added']" routerLinkActive="active">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="content px-2">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+            <div class="input-group">
+              <div class="container">
+                <div class="row">
+
+                  <div class="col col-lg-2">
+                    <select style="width: 100px;" class="form-control" (change)="changePageSize($event.target.value)" [(ngModel)]="pageSize">
+                      <option *ngFor=" let ps of listPageSize"
+                            [value]="ps.size">
+                            {{ps.size}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm">
+                    <input type="text" class="form-control" name="name" placeholder="Search..." [(ngModel)]="name" />
+                  </div>
+
+                  <div class="col-sm">
+                    <select class="form-control" [(ngModel)]="categoryName"> 
+                      <option value="">--Category--</option>
+                      <option *ngFor=" let category of categories"
+                          [value]="category.name">
+                          {{category.name}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm">
+                    <select class="form-control" [(ngModel)]="authorName">
+                      <option value="">--Author--</option>
+                      <option  *ngFor=" let author of authors"
+                          [value]="author.name">
+                          {{author.name}}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm">
+                    <select class="form-control" [(ngModel)]="publisherName">
+                      <option value="">--Publisher--</option>
+                      <option *ngFor=" let publisher of publishers"
+                          [value]="publisher.name">
+                          {{publisher.name}}
+                      </option>
+                    </select>
+                  </div>
+
+                <div class="col-sm">
+                  <button type="button" class="btn bg-blue" (click)="filter()">
+                    <i class="fas fa-search"></i>
+                  </button>
+
+                  <button type="button" class="btn bg-secondary mx-3" (click)="setup()">
+                    <i class="fas fa-redo-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+  
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead class="bg-light">
+                <tr>
+                  <th>Name</th>
+                  <th>Price Borrow</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Publisher</th>
+                  <th>Stock</th>
+                  <th>Year</th>
+                  <th>Add Favorite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor=" let bookLibrary of bookLibraries | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems:count }; let i = index">
+                  <td><a [routerLink]="['/app/book-detail',bookLibrary.id]" routerLinkActive="active">{{ bookLibrary.bookName }}</a></td>
+                  <td>{{ bookLibrary.priceBorrow }}</td>
+                  <td>{{ bookLibrary.category }}</td>
+                  <td>{{ bookLibrary.author }}</td>
+                  <td>{{ bookLibrary.publisher }}</td>
+                  <td>{{ bookLibrary.stock }}</td>
+                  <td>{{ bookLibrary.yearPublic }}</td>   
+                  <td><button type="button" class="btn" (click)="addFavorite(bookLibrary)"><i class="fas fa-heart"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer bg-light border-top">
+            <div class="row">
+              <div class="col-sm-4 col-12 text-sm-left text-center">
+                <button class="btn btn-secondary" (click)="refresh()">
+                  <i class="fas fa-redo-alt"></i>
+                </button>
+              </div>
+              <div class="col-sm-4 col-12 text-center">
+                <p class="mb-0 my-2">
+                  {{ "TotalRecordsCount" | localize: count }}
+                </p>
+              </div>
+              <div class="col-sm-4 col-12">
+                <div class="float-sm-right m-auto">
+                  <pagination-controls previousLabel="" nextLabel="" (pageChange)="onChangePage($event)"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
